@@ -30,7 +30,6 @@ const createMiddleware = (app) => {
         }
 
         const token = authHeaderValue.replace('Bearer ', '');
-
         if (token in sessions) {
             next();
         } else {
@@ -42,7 +41,6 @@ const createMiddleware = (app) => {
 
 const createRoutes = (app) => {
     app.post('/login', (req, res) => {
-
         const { username, password } = req.body;
 
         if (!username || !password) {
