@@ -1,11 +1,17 @@
+"use client";
+
+import { useState } from "react";
 import LoginForm from "./components/LoginForm";
+import ChuckNorris from "./components/ChuckNorris";
 
 function App() {
-  return (
-    <div>
-      
-      <LoginForm />
-    </div>
+  const [token, setToken] = useState("dev-token"); // for testing purposes
+//   const [token, setToken] = useState("null");
+
+  return token ? (
+    <ChuckNorris token={token} onLogout={() => setToken(null)} />
+  ) : (
+    <LoginForm onLogin={setToken} />
   );
 }
 
