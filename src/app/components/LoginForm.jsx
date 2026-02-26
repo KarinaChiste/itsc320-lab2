@@ -14,14 +14,36 @@ function LoginForm({ onLogin }) {
         onSubmit={(e) => {
           e.preventDefault();
 
+          const trimUsername = username.trim();
+          const trimPassword = password.trim(); // trimmed to not allow spaces
+
+          // Verification error messages, for single username entry, single password entry, no password or username, or otherwise invalid info
+
+          if (!trimUsername && !trimPassword) {
+            setError("Please enter a username and password.");
+            return;
+          }
+
+          if (!trimUsername) {
+            setError("Username is required.");
+            return;
+          }
+
+          if (!trimPassword) {
+            setError("Password is required.");
+            return;
+          }
+
+          setError(""); 
+
           fetch("http://localhost:3333/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username: username,
-              password: password,
+              username: trimUsername,
+              password: password, 
             }),
           })
             .then(async (res) => {
@@ -64,7 +86,7 @@ function LoginForm({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* Made error message instead od alert */}
+        {/* Made error message instead og alert */}
         {error && (
           <p className="text-red-500 text-sm mb-4">
             {error}
